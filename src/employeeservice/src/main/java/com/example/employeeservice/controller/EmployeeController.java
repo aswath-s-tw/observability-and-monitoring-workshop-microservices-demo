@@ -6,6 +6,7 @@ import com.example.employeeservice.model.Employee;
 import com.example.employeeservice.repository.EmployeeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
+
 public class EmployeeController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
@@ -34,7 +38,9 @@ public class EmployeeController {
     }
 
     @GetMapping("/")
-    public Iterable<Employee> findAll() {
+    public Iterable<Employee> findAll(HttpServletRequest request) {
+        MDC.put("uri", request.getRequestURI());
+        MDC.put("method", "employee:find");
         LOGGER.info("Employee find");
         return repository.findAll();
     }
