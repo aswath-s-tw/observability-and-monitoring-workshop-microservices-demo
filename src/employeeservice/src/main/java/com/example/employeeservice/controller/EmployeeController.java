@@ -37,13 +37,13 @@ public class EmployeeController {
     @GetMapping("/{id}")
     public Employee findById(@PathVariable("id") String id) {
         LOGGER.info("Employee find: id={}", id);
-        return repository.findById(id).get();
+        return repository.findById(id).orElse(new Employee("null", "null", "null", 0, "null"));
     }
 
     @GetMapping("/")
     public Iterable<Employee> findAll(HttpServletRequest request) {
         LOGGER.info(
-                "Employee find",
+                "Employee find, {}, {}",
                 keyValue("route", request.getRequestURI()),
                 keyValue("method", "employee:find")
         );

@@ -3,7 +3,7 @@ spring:
     name: employeeservice
   data:
     mongodb:
-      #      uri: "mongodb://localhost:27017/sampledb"
+#      uri: "mongodb://localhost:27017/sampledb"
       uri: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:27017/${MONGO_DATABASE}?authSource=admin"
 
 springdoc:
