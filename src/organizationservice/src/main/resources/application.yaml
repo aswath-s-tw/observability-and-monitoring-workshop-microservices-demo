@@ -30,4 +30,4 @@ management:
     enable:
       all: true
     tags:
-      application: employeeservice
+      application: organization-service
