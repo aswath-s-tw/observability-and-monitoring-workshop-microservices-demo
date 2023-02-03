@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.employeeservice.model.Employee;
 import com.example.employeeservice.repository.EmployeeRepository;
+import net.logstash.logback.argument.StructuredArguments;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+
+import static net.logstash.logback.argument.StructuredArguments.keyValue;
 
 @RestController
 
@@ -39,9 +42,11 @@ public class EmployeeController {
 
     @GetMapping("/")
     public Iterable<Employee> findAll(HttpServletRequest request) {
-        MDC.put("uri", request.getRequestURI());
-        MDC.put("method", "employee:find");
-        LOGGER.info("Employee find");
+        LOGGER.info(
+                "Employee find",
+                keyValue("route", request.getRequestURI()),
+                keyValue("method", "employee:find")
+        );
         return repository.findAll();
     }
 
