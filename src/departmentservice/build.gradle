@@ -1,7 +1,7 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '2.7.8'
-	id 'io.spring.dependency-management' version '1.1.0'
+    id 'java'
+    id 'org.springframework.boot' version '2.7.8'
+    id 'io.spring.dependency-management' version '1.1.0'
 }
 
 group = 'com.example'
@@ -9,34 +9,36 @@ version = '1.0'
 sourceCompatibility = '17'
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 ext {
-	offlineCompile = new File("$buildDir/output/lib")
+    offlineCompile = new File("$buildDir/output/lib")
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.springframework.boot:spring-boot-starter-web:2.7.8'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator:2.7.8'
-	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.7.8'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.7.8'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator:2.7.8'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.7.8'
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.5'
-	implementation 'org.springframework.cloud:spring-cloud-dependencies:2021.0.3'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.5'
+    implementation 'org.springframework.cloud:spring-cloud-dependencies:2021.0.3'
 
-	implementation 'org.springdoc:springdoc-openapi-ui:1.6.14'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.14'
+
+    implementation 'io.micrometer:micrometer-registry-prometheus:latest.release'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 // This to cache dependencies during Docker image building. First build will take time.
 // Subsequent build will be incremental.
 task downloadRepos(type: Copy) {
-	from configurations.compileClasspath
-	into offlineCompile
-	from configurations.compileClasspath
-	into offlineCompile
+    from configurations.compileClasspath
+    into offlineCompile
+    from configurations.compileClasspath
+    into offlineCompile
 }
