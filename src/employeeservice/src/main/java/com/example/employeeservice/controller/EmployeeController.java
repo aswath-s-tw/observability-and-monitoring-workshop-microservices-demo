@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.example.employeeservice.model.Employee;
 import com.example.employeeservice.repository.EmployeeRepository;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Metrics;
 import net.logstash.logback.argument.StructuredArguments;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +45,10 @@ public class EmployeeController {
 
     @GetMapping("/")
     public Iterable<Employee> findAll(HttpServletRequest request) {
+
+        Counter counter = Metrics.counter("employee_find");
+        counter.increment();
+
         LOGGER.info(
                 "Employee find, {}, {}",
                 keyValue("route", request.getRequestURI()),
